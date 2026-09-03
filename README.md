@@ -1,5 +1,3 @@
-# RZ_MPU_Overall_Offer
-
 # Renesas_MPU_EmbSW_Overall_Offer
 
 ## Overview
@@ -8,16 +6,23 @@ Renesas MPU Embedded Software distribution is a set of software components, syst
 
 Renesas MPU Embedded Software distribution includes:
 
-- A Linux® distribution, running on the Arm® Cortex®-A processor(s): the **Renesas RZ Verified Linux Package (VLP)**
-- An **FSP / bare-metal package**, running on the Arm® Cortex®-M (or real-time) processor: the **Renesas RZ FSP package**
+- A Linux® distribution, running on the Arm® Cortex®-A processor(s): the **Renesas RZ Verified Linux Package (VLP)** and **RZ Linux BSP**, delivered through Yocto layers and CIP-based kernel/bootloader repositories.
+- An **FSP package**, running on the Arm® Cortex®-M / Cortex-R real-time processor(s): the **Renesas RZ Flexible Software Package (FSP)**.
 
-The **Renesas RZ Verified Linux Package (VLP)** is a Linux® distribution based on the OpenEmbedded build framework. It includes the following collection of software components.
+> [!IMPORTANT]
+> The Renesas RZ MPU offer is published across **two GitHub organizations**:
+> - [`github.com/renesas`](https://github.com/renesas) — the **RZ FSP** (Cortex-M/R side), shared with the RA MCU tooling.
+> - [`github.com/renesas-rz`](https://github.com/renesas-rz) — the **RZ Linux/Yocto BSP** (Cortex-A side): Yocto layers, CIP kernel, U-Boot, TF-A, OP-TEE, AI SDK, HMI SDK, and AOSP.
+>
+> Unlike a single `oe-manifest` entry point, the RZ Linux BSP is assembled from the individual component repositories listed below. A curated index is maintained at the [Renesas RZ Software org profile](https://github.com/renesas-rz).
 
-**RZ VLP BSP (OP-TEE secure OS, boot chain and Linux kernel):**
+The **Renesas RZ Verified Linux Package (VLP)** is a Linux® distribution based on the OpenEmbedded/Yocto build framework, using a CIP (Civil Infrastructure Platform) SLTS kernel for up to 10-year maintenance. It includes the following collection of software components.
+
+**RZ Linux BSP (OP-TEE secure OS, boot chain and Linux kernel):**
 
 - The boot chain based on TF-A and U-Boot
 - The OP-TEE secure OS running on the Cortex®-A in secure mode
-- The Linux kernel running on the Cortex®-A in non-secure mode
+- The Linux kernel (CIP/SLTS) running on the Cortex®-A in non-secure mode
 
 **Application frameworks** such as the following Linux application frameworks (non-exhaustive list):
 
@@ -25,98 +30,120 @@ The **Renesas RZ Verified Linux Package (VLP)** is a Linux® distribution based 
 - GStreamer as a multimedia framework
 - Advanced Linux Sound Architecture (ALSA) libraries
 
-The **Renesas RZ FSP** is a comprehensive embedded software libraries and drivers, delivered for each RZ series.
+The **Renesas RZ FSP** is a comprehensive set of embedded software libraries and drivers, delivered for the RZ real-time cores. As of RZ FSP v4.x, the previously separate RZ/A, RZ/G, RZ/N, RZ/T and RZ/V FSPs are unified into a single package.
 
-- The CMSIS modules (core and device) corresponding to the Arm® core implemented in this RZ product
-- The **RZ FSP HAL drivers**: an abstraction drivers layer, the API ensuring maximized portability across the RZ portfolio
-- The BSP Drivers of each evaluation or demonstration board provided by this RZ series
+- The CMSIS modules corresponding to the Arm® core implemented in the RZ product
+- The **RZ FSP HAL drivers**: an abstraction driver layer, the API ensuring maximized portability across the RZ portfolio
+- The BSP for each evaluation board provided by the RZ series
 - A consistent set of middleware components such as RTOS, OpenAMP, ...
-- A full set of software projects (basic examples, applications or demonstrations) for each board provided by this RZ series
+- A full set of software projects (examples, applications or demonstrations) for each board provided by the RZ series
 
 ## Description
 
 This repo is a simple Readme describing all Renesas RZ MPU related GitHub projects, the open source offer for the Renesas RZ MPU products.
 
-## Renesas MPU Embedded Software packages
+## Renesas RZ FSP packages
 
-### RZ Verified Linux Packages
+The RZ FSP unifies all RZ series into one package, with per-series folders (`rza/`, `rzg/`, `rzn/`, `rzt/`, `rzv/`) inside a single repository.
 
-| OpenSTLinux Package | Description |
-| :--- | :--- |
-| oe-manifest | Renesas RZ MPU Embedded Software overall manifest |
-| meta-renesas | Renesas RZ MPU OpenEmbedded/Yocto BSP layer |
-| meta-rz-scripts | Renesas RZ MPU OpenEmbedded/Yocto front-end scripts |
-| meta-renesas-rz | Renesas RZ MPU OpenEmbedded/Yocto frameworks layer (demonstrators, image examples, ...) |
-| meta-rz-features | Renesas RZ MPU OpenEmbedded/Yocto BSP layer add-ons (Smart Configurator machine, ...) |
-| linux | Renesas RZ MPU Linux kernel on `*-rz` branch |
-| u-boot | Renesas RZ MPU U-Boot on `*-rz` branch |
-| trusted-firmware-a | Renesas RZ MPU Arm Trusted Firmware (for Cortex®-A) on `*-rz` branch |
-| optee_os | Renesas RZ MPU OP-TEE OS on `*-rz` branch |
-| gpu-binaries | GPU binaries, GPU kernel driver source code |
-| linux-examples | Some Linux examples |
-| rz-linux-application | Renesas RZ MPU boards default applications |
-| optee-rz-addons | Renesas RZ MPU features and add-ons around the OP-TEE ecosystem |
-| dt-rz | Renesas RZ MPU embedded software device tree configurations |
-| ddr-phy | Firmware for DDR PHY on RZ MPU |
+| Package | Description | Repository |
+| :--- | :--- | :--- |
+| RZ FSP | Unified Flexible Software Package for RZ/A, RZ/G, RZ/N, RZ/T, RZ/V | [Go to repository](https://github.com/renesas/rz-fsp) |
+| RZ FSP — RZ/A | RZ/A series FSP source (Cortex-A real-time / bare-metal) | [Go to repository](https://github.com/renesas/rz-fsp/tree/master/rza/rz) |
+| RZ FSP — RZ/G | RZ/G series FSP source (Cortex-M sub-core) | [Go to repository](https://github.com/renesas/rz-fsp/tree/master/rzg/rz) |
+| RZ FSP — RZ/N | RZ/N series FSP source | [Go to repository](https://github.com/renesas/rz-fsp/tree/master/rzn/rz) |
+| RZ FSP — RZ/T | RZ/T series FSP source | [Go to repository](https://github.com/renesas/rz-fsp/tree/master/rzt/rz) |
+| RZ FSP — RZ/V | RZ/V series FSP source | [Go to repository](https://github.com/renesas/rz-fsp/tree/master/rzv/rz) |
+| RZ FSP Examples | Example and application projects for the RZ MPU family | [Go to repository](https://github.com/renesas/rz-fsp-examples) |
 
-### Other MPU Packages
+## Renesas RZ Linux BSP packages
 
-| Package | Description |
-| :--- | :--- |
-| RZ_FSP_RZG | RZ/G Cube running in non-secure Cortex®-M context |
-| cmsis-device-rzg | Provides the RZ FSP CMSIS Device MPU Component of the RZ/G series. |
-| rzgxx-hal-driver | Provides the RZ FSP MPU Component "hal_driver" of the RZ/G series. |
-| RZ_FSP_RZV | RZ/V Cube running in non-secure Cortex®-M context |
-| cmsis-device-rzv | Provides the RZ FSP CMSIS Device MPU Component of the RZ/V series. |
-| rzvxx-hal-driver | Provides the RZ FSP MPU Component "hal_driver" of the RZ/V series. |
-| RZ_FSP_RZA | RZ/A firmware |
-| cmsis-device-rza | Provides the RZ FSP CMSIS Device MPU Component of the RZ/A series. |
-| rzaxx-hal-driver | Provides the RZ FSP MPU Component "hal_driver" of the RZ/A series. |
-| trusted-firmware-m | RZ Trusted Firmware-M running in secure Cortex®-M context |
-| tf-m-tests | Provides tests for trusted-firmware-m component |
-| rz-low-power | Contains source code of RZ MPU Low-power firmware |
-| SCP-firmware | Renesas RZ MPU SCP-firmware on `-rz` branch |
-| OpenBMC | How to set up OpenBMC for Renesas RZ MPU |
-| meta-rz-ota | Renesas RZ MPU Yocto layer to demonstrate how the secure firmware update is working in the RZ VLP. |
+The RZ Linux BSP (Cortex-A side) is assembled from the following component repositories in the [`renesas-rz`](https://github.com/renesas-rz) organization.
 
-## Renesas MPU Tools packages
+| Package | Description | Repository |
+| :--- | :--- | :--- |
+| meta-renesas | Yocto layer for Renesas RZ products (BSP + distro, Scarthgap) | [Go to repository](https://github.com/renesas-rz/meta-renesas) |
+| rz_linux-cip | RZ Linux kernel based on the CIP/SLTS long-term-support tree | [Go to repository](https://github.com/renesas-rz/rz_linux-cip) |
+| renesas-u-boot-cip | U-Boot bootloader for RZ platforms | [Go to repository](https://github.com/renesas-rz/renesas-u-boot-cip) |
+| rzg_trusted-firmware-a | Arm Trusted Firmware-A (TF-A) for RZ platforms | [Go to repository](https://github.com/renesas-rz/rzg_trusted-firmware-a) |
+| rzg_optee-os | OP-TEE secure OS for RZ platforms | [Go to repository](https://github.com/renesas-rz/rzg_optee-os) |
+| rzg_optee-ta_fwu | OP-TEE Trusted Application for secure firmware update | [Go to repository](https://github.com/renesas-rz/rzg_optee-ta_fwu) |
+| rz_tool_flash_writer | Flash Writer tool for programming RZ boot media | [Go to repository](https://github.com/renesas-rz/rz_tool_flash_writer) |
+| rz-community-bsp | Community BSP for RZ reference platforms using latest upstream software | [Go to repository](https://github.com/renesas-rz/rz-community-bsp) |
+| meta-rz-demos | Yocto layer providing RZ demonstration images | [Go to repository](https://github.com/renesas-rz/meta-rz-demos) |
+| local_manifests | repo manifests for assembling the RZ Linux/AOSP source trees | [Go to repository](https://github.com/renesas-rz/local_manifests) |
 
-| RZ Package | Description |
-| :--- | :--- |
-| RZ-DDRFW-UTIL | Renesas RZ MPU firmware used to initialize DDR and perform DDR tests |
-| RZ-PRGFW-UTIL | Renesas RZ MPU multiple applications to manage the One-Time Programmable (OTP) |
-| rz-wrapper4dbg | Renesas RZ MPU tool that adds a debug wrapper to an RZ FSBL image |
-| wiki-rz-addons | Renesas RZ MPU wiki content outside wiki |
+## Renesas RZ Multimedia and Graphics packages
 
-## RZ MPU Expansion Packages
+Multimedia and graphics enablement layered on top of the RZ Linux BSP.
 
-### RZ-LINUX Packages
+| Package | Description | Repository |
+| :--- | :--- | :--- |
+| gst-omx | GStreamer OpenMAX IL plugin for RZ hardware video codecs | [Go to repository](https://github.com/renesas-rz/gst-omx) |
+| gst-plugins-bad | GStreamer bad-plugins set for RZ multimedia pipelines | [Go to repository](https://github.com/renesas-rz/gst-plugins-bad) |
+| rzg_gstreamer_vspmfilter | GStreamer VSPM filter plugin (video signal processing) for RZ/G | [Go to repository](https://github.com/renesas-rz/rzg_gstreamer_vspmfilter) |
+| rz-virtual-uart | SubCore-based virtual UART solution for Linux (up to 10 Mbps) | [Go to repository](https://github.com/renesas-rz/rz-virtual-uart) |
 
-| Package | Description |
-| :--- | :--- |
-| RZ-LINUX-AI | OE meta layer to install AI frameworks and tools for the Renesas RZ MPU |
-| RZ-LINUX-RT | OE meta layer to get the RZ-LINUX-RT expansion package |
-| RZ-LINUX-PREDMNT | OE meta layer to get the Renesas Predictive Maintenance Platform application |
-| RZ-LINUX-GNSS1 | OE meta layer to get the RZ-LINUX-GNSS1 expansion package |
-| RZ-LINUX-TSNSWCH | RZ MPU Expansion Package that targets the Time-Sensitive Networking (TSN) switch |
-| RZ-LINUX-AZURE | RZ MPU RZ VLP Expansion Package that targets Microsoft Azure IoT Edge for RZ/G and RZ/V product microprocessors |
-| RZ-LINUX-AWS | RZ MPU RZ VLP Expansion Package that targets Amazon Web Services® AWS IoT Greengrass™ V2 for RZ/G and RZ/V product microprocessors |
-| RZ-LINUX-QT | RZ MPU RZ VLP Expansion Package that targets Qt based application and graphical user interface (GUI) development for the RZ series microprocessors |
-| RZ-LINUX-ISP | Open-source software package providing ISP (Image Signal Processing) image quality software targeting the RZ series that embed an ISP camera pipeline |
-| RZ-LINUX-IGTW1 | Linux-based expansion software package designed for industrial application development on Renesas RZ MPU |
+## Renesas RZ/V Vision AI packages
 
-### RZ FSP Packages
+Vision-AI enablement for the RZ/V series, centered on the DRP-AI accelerator and the RUHMI (formerly DRP-AI TVM) toolchain.
 
-| Package | Description |
-| :--- | :--- |
-| rz-fsp-freertos-mpu | Full integration of FreeRTOS in the RZ FSP environment for the RZ MPU series |
+| Package | Description | Repository |
+| :--- | :--- | :--- |
+| rzv_drp-ai_tvm | RUHMI — AI model optimization/deployment for RZ/V, powered by EdgeCortix® MERA™ | [Go to repository](https://github.com/renesas-rz/rzv_drp-ai_tvm) |
+| rzv_ai_sdk | RZ/V AI Software Development Kit (Yocto Linux + DRP-AI + graphics) | [Go to repository](https://github.com/renesas-rz/rzv_ai_sdk) |
+| rzv_sample_apps | Reference/sample applications for RZ/V (camera, encode, AI) | [Go to repository](https://github.com/renesas-rz/rzv_sample_apps) |
+| rzv2n_drp-ai_driver | DRP-AI driver for RZ/V2N | [Go to repository](https://github.com/renesas-rz/rzv2n_drp-ai_driver) |
+| rzv2n_opencv_accelerator | DRP-accelerated OpenCV for RZ/V2N | [Go to repository](https://github.com/renesas-rz/rzv2n_opencv_accelerator) |
+| meta-renesas-ai | Yocto layer adding FOSS AI frameworks (ArmNN, TFLite, ONNX Runtime) to RZ/G, RZ/V | [Go to repository](https://github.com/renesas-rz/meta-renesas-ai) |
+| ruhmi-framework-rzg | RUHMI AI model compiler workflow for RZ/G3E | [Go to repository](https://github.com/renesas/ruhmi-framework-rzg) |
+
+## Renesas RZ/G HMI packages
+
+| Package | Description | Repository |
+| :--- | :--- | :--- |
+| rzg_hmi_sdk | HMI SDK for RZ/G — GUI frameworks and sample applications (LVGL, Chromium) | [Go to repository](https://github.com/renesas-rz/rzg_hmi_sdk) |
+
+## Renesas RZ Android (AOSP) packages
+
+| Package | Description | Repository |
+| :--- | :--- | :--- |
+| rz_aosp | Renesas RZ Android Open Source Project (AOSP) BSP | [Go to repository](https://github.com/renesas-rz/rz_aosp) |
+| rzv_aosp_ai_apps | AI applications for RZ/V2H on the AOSP software package | [Go to repository](https://github.com/renesas-rz/rzv_aosp_ai_apps) |
+
+## Renesas RZ Documentation and Solutions
+
+| Package | Description | Repository |
+| :--- | :--- | :--- |
+| rz_solution | Sources for the Renesas RZ Linux Solutions website (github.io) | [Go to repository](https://github.com/renesas-rz/rz_solution) |
+| rz_linux_distros | Sources for the RZ Ubuntu/Debian distros website (github.io) | [Go to repository](https://github.com/renesas-rz/rz_linux_distros) |
+| rz-ethos-u-docs | Documentation for the RZ Ethos-U (NPU) package | [Go to repository](https://github.com/renesas-rz/rz-ethos-u-docs) |
+
+## Supported RZ MPU boards
+
+The following evaluation boards are supported across the RZ Linux BSP (Yocto `meta-renesas`) and RZ FSP. MPU part numbers are shown where published.
+
+| Series | Board | MPU | Domain |
+| :--- | :--- | :--- | :--- |
+| RZ/G | RZ/G2L SMARC EVK | R9A07G044L | Linux (VLP) + FSP |
+| RZ/G | RZ/G2LC SMARC EVK | R9A07G044C | Linux (VLP) + FSP |
+| RZ/G | RZ/G2UL SMARC EVK | R9A07G043U | Linux (VLP) + FSP |
+| RZ/G | RZ/G3S SMARC EVK | R9A08G045 | Linux (VLP) + FSP |
+| RZ/G | RZ/G3E EVK | R9A09G047E57 | Linux (VLP) + FSP |
+| RZ/G | RZ/G3L SMARC EVK | R9A08G046 | Linux (VLP) + FSP |
+| RZ/V | RZ/V2L SMARC EVK | R9A07G054L | Linux + AI SDK |
+| RZ/V | RZ/V2H EVK | R9A09G057H | Linux + AI SDK + AOSP |
+| RZ/V | RZ/V2N EVK / FPB-RZV2N | R9A09G056 | Linux + AI SDK |
+| RZ/T | RZ/T2H EVK | R9A09G077 | Linux (VLP) + FSP |
+| RZ/N | RZ/N2H EVK | R9A09G087 | Linux (VLP) + FSP |
+| RZ/A | RZ/A3UL EVK | — | FSP |
 
 ## Communication and support
 
 For communication and support, you can use:
 
 - [Renesas Support Center](https://www.renesas.com/support) for any defect
-- [Renesas Engineering Community](https://community.renesas.com/) — RZ MPU forum
+- [Renesas Engineering Community — RZ forum](https://community.renesas.com/rz/)
 
 ## About
 
